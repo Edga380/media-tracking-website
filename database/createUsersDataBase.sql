@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS Users (
+  user_id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username CHAR(30) UNIQUE NOT NULL,
+  password CHAR(60) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Sessions (
+  id TEXT NOT NULL,
+  user_id INTEGER NOT NULL,
+  expires_at DATETIME NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);

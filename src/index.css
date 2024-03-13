@@ -1,0 +1,68 @@
+:root {
+  --text-color: rgb(240, 240, 240);
+  --border-color: rgb(200, 100, 200);
+  --background-color: rgb(130, 50, 130);
+}
+
+h1 {
+  color: var(--text-color);
+}
+
+h2 {
+  color: var(--text-color);
+}
+
+h3 {
+  color: var(--text-color);
+}
+
+h4 {
+  color: var(--text-color);
+}
+
+a {
+  color: var(--text-color);
+}
+
+p {
+  color: var(--text-color);
+}
+
+body {
+  background-image: url("/page_background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: rgb(30, 30, 30);
+}
+
+::placeholder {
+  color: var(--border-color);
+}
+
+/* For WebKit-based browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 100px; /* Width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-color); /* Color of the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--background-color); /* Color of the scrollbar thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(
+    --background-color
+  ); /* Color of the scrollbar thumb on hover */
+}
+/* For Firefox */
+/* Width of the scrollbar */
+* {
+  scrollbar-width: 100px;
+  scrollbar-color: var(--background-color) var(--container-background-color);
+}

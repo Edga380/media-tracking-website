@@ -1,0 +1,102 @@
+.sides-container {
+  display: flex;
+  height: 100vh;
+}
+
+.left-side {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+}
+
+.leftside-container {
+  background-color: rgba(240, 240, 240, 0.1);
+  padding: 5rem 10rem 5rem 10rem;
+  text-align: center;
+}
+
+.right-side {
+  background-color: rgba(240, 240, 240, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+}
+
+.form-container {
+  background-color: var(--background-color);
+  width: 20rem;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input {
+  background-color: var(--background-color);
+  border: none;
+  border: 1px solid var(--border-color);
+  padding: 0.8rem 1rem 0.8rem 1rem;
+  margin-bottom: 1rem;
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+button {
+  background-color: var(--background-color);
+  border: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  padding: 0.8rem 1rem 0.8rem 1rem;
+}
+
+button:hover {
+  background-color: var(--border-color);
+  cursor: pointer;
+}
+
+.text-link:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.page-loading-container {
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.5;
+  width: 100%;
+  height: 100vh;
+}
+
+.page-loading {
+  background-color: var(--background-color);
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+.page-loading-dot {
+  background-color: var(--border-color);
+  width: 2rem;
+  height: 2rem;
+  margin: 2rem;
+  border-radius: 50%;
+}
