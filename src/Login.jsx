@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import "./Login.css";
-import { useNavigate } from "react-router-dom";
+import { UseAuth } from "./UseAuth";
 
-function Login({ setIsLoggedIn, isLoggedIn }) {
-  const navigate = useNavigate();
+export default function Login() {
+  const { login } = UseAuth();
 
   const [loading, setLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState({
@@ -52,13 +52,16 @@ function Login({ setIsLoggedIn, isLoggedIn }) {
           credentials: "include",
         });
         if (response.ok) {
-          setIsLoggedIn(true);
-          navigate("/Home");
+          const data = await response.json();
+          if (data) {
+            await login(data.username);
+            setLoading(false);
+          }
+          setLoading(false);
         }
         setLoading(false);
       } catch (error) {
         console.log(error);
-        setLoading(false);
       }
     };
     checkLogin();
@@ -66,10 +69,6 @@ function Login({ setIsLoggedIn, isLoggedIn }) {
 
   const submitLoginForm = async (event) => {
     event.preventDefault();
-    if (isLoggedIn) {
-      navigate("/Home");
-      return;
-    }
     try {
       const response = await fetch("http://localhost:3000/login", {
         method: "POST",
@@ -78,10 +77,9 @@ function Login({ setIsLoggedIn, isLoggedIn }) {
         body: JSON.stringify(loginFormData),
       });
       if (response.ok) {
-        const data = await response.json();
-        setIsLoggedIn(true);
-        navigate("/Home");
+        await login(loginFormData.username);
         setLoginFormData({ ...loginFormData, username: "", password: "" });
+        setLoading(false);
       } else {
         setErrorMessage({
           error: {
@@ -255,5 +253,3 @@ function Login({ setIsLoggedIn, isLoggedIn }) {
     </>
   );
 }
-
-export default Login;

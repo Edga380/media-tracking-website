@@ -11,6 +11,7 @@ import {
   registerNewUser,
   loginUser,
   retrieveUserCookieData,
+  removeUserSession,
 } from "./database/database.js";
 const usersDataBase = initializeDatabase(process.env.USERS_DB);
 
@@ -29,7 +30,7 @@ app.post("/check-login", async (req, res) => {
     req.signedCookies.mediaTrackingWebsiteCookie
   );
   if (retrieveSessionData) {
-    res.status(200).json({ success: true });
+    res.status(200).json(retrieveSessionData);
   } else {
     res.status(401).json({ error: "Cookie data not found in the database." });
   }
@@ -48,6 +49,18 @@ app.post("/login", async (req, res) => {
     res.status(200).json({ message: "Login successful." });
   } else {
     res.status(401).json({ error: "Invalid username or password." });
+  }
+});
+
+app.post("/logout", async (req, res) => {
+  const logoutResponse = await removeUserSession(
+    usersDataBase,
+    req.signedCookies.mediaTrackingWebsiteCookie
+  );
+  if (logoutResponse) {
+    res.status(200).json(logoutResponse);
+  } else {
+    res.status(401).json({ error: "Cookie data not found in the database." });
   }
 });
 

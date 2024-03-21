@@ -1,27 +1,26 @@
 import "./App.css";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Login from "./Login";
 import Home from "./Home";
 import NotFound from "./NotFound";
-import { useState } from "react";
+import { AuthProvider } from "./UseAuth";
+import { ProtectedRoute } from "./ProtectedRoute";
 
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+export default function App() {
   return (
-    <Router>
+    <AuthProvider>
       <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="*" element={<NotFound />} />
         <Route
-          path="/"
+          path="/home"
           element={
-            <Login setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
           }
         />
-        {isLoggedIn && <Route path="/Home" element={<Home />} />}
-        <Route path="*" element={<NotFound />} />
       </Routes>
-    </Router>
+    </AuthProvider>
   );
 }
-
-export default App;

@@ -69,6 +69,17 @@ async function setUserSession(db, userId) {
   }
 }
 
+export async function removeUserSession(db, signedCookie) {
+  const stmt = db.prepare("DELETE FROM Sessions WHERE id = ?");
+  try {
+    stmt.run(signedCookie);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 export async function retrieveUserCookieData(db, signedCookie) {
   const stmt = db.prepare("SELECT * FROM Sessions WHERE id = ?");
   const userSessionData = stmt.get(signedCookie);
@@ -78,7 +89,9 @@ export async function retrieveUserCookieData(db, signedCookie) {
       stmt.run(signedCookie);
       return false;
     }
-    return true;
+    const stmt = db.prepare("SELECT username FROM Users WHERE user_id = ?");
+    const username = stmt.get(userSessionData.user_id);
+    return username;
   } else {
     return false;
   }
