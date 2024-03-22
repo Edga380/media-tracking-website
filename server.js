@@ -13,7 +13,14 @@ import {
   retrieveUserCookieData,
   removeUserSession,
 } from "./database/database.js";
-const usersDataBase = initializeDatabase(process.env.USERS_DB);
+const usersDataBase = initializeDatabase(
+  process.env.USERS_DB,
+  process.env.USERS_SCHEMA
+);
+const mediaDataBase = initializeDatabase(
+  process.env.MEDIA_DB,
+  process.env.MEDIA_SCHEMA
+);
 
 const corsOptions = {
   origin: "http://localhost:5173",
@@ -44,7 +51,6 @@ app.post("/login", async (req, res) => {
       signed: true,
       httpOnly: true,
       sameSite: "lax",
-      maxAge: 691200,
     });
     res.status(200).json({ message: "Login successful." });
   } else {

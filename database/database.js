@@ -10,12 +10,12 @@ const __filename = new URL(import.meta.url).pathname;
 const __dirname = path.dirname(__filename);
 
 // Initialize database
-export function initializeDatabase(databaseName) {
+export function initializeDatabase(databaseName, schemaToRead) {
   const dbFilePath = path.join(__dirname, databaseName);
   const db = new Database(dbFilePath);
 
   // Read the schema
-  const schemaPath = path.join(__dirname, "createUsersDataBase.sql");
+  const schemaPath = path.join(__dirname, schemaToRead);
   const schema = fs.readFileSync(schemaPath, "utf-8");
 
   // Execute schema
@@ -30,10 +30,10 @@ export async function registerNewUser(db, username, password) {
     12
   );
   const stmt = db.prepare(
-    "INSERT INTO Users (username, password) VALUES (?, ?)"
+    "INSERT INTO Users (username, password, joined_in) VALUES (?, ?, ?)"
   );
   try {
-    stmt.run(username, hashedPassword);
+    stmt.run(username, hashedPassword, getCurrentYearMonthDay());
     return true;
   } catch (error) {
     return false;

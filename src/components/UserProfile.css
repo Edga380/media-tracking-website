@@ -1,0 +1,26 @@
+.profile-container {
+  background-color: var(--container-background-color);
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.profile-section-container {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px dashed var(--border-color);
+}
+
+.profile-bg {
+  background-image: url("https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg");
+  width: 100%;
+  border-radius: 2rem 2rem 0rem 0rem;
+}
+
+.profile-information-container {
+  background-color: var(--container-background-color);
+  height: 30rem;
+  margin-top: 20rem;
+  border-top-right-radius: 50% 3rem;
+  border-top-left-radius: 50% 3rem;
+}

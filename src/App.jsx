@@ -1,10 +1,10 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import Login from "./Login";
-import Home from "./Home";
-import NotFound from "./NotFound";
-import { AuthProvider } from "./UseAuth";
-import { ProtectedRoute } from "./ProtectedRoute";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import { AuthProvider } from "./components/UseAuth";
+import { ProtectedRoute } from "./components/ProtectedRoute";
 
 export default function App() {
   return (
