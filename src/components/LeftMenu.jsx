@@ -10,6 +10,12 @@ export const LeftMenu = ({ selectedMenuItem, onMenuItemClick }) => {
         Home
       </button>
       <button
+        className={selectedMenuItem === "addMedia" ? "active" : ""}
+        onClick={() => onMenuItemClick("addMedia")}
+      >
+        Add Media
+      </button>
+      <button
         className={selectedMenuItem === "profile" ? "active" : ""}
         onClick={() => onMenuItemClick("profile")}
       >

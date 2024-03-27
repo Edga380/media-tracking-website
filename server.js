@@ -12,7 +12,13 @@ import {
   loginUser,
   retrieveUserCookieData,
   removeUserSession,
+  retrieveUserData,
+  addMedia,
+  retrieveMedia,
+  editMedia,
+  editMediaWatched,
 } from "./database/database.js";
+
 const usersDataBase = initializeDatabase(
   process.env.USERS_DB,
   process.env.USERS_SCHEMA
@@ -85,6 +91,60 @@ app.post("/register", async (req, res) => {
     }
   } else {
     res.status(401).json({ message: "Passwords do not match." });
+  }
+});
+
+app.post("/getuserdata", async (req, res) => {
+  const userData = await retrieveUserData(
+    usersDataBase,
+    req.signedCookies.mediaTrackingWebsiteCookie
+  );
+
+  if (userData) {
+    res.status(200).json(userData);
+  } else {
+    res.status(400).json("User not found");
+  }
+});
+
+app.post("/addmedia", async (req, res) => {
+  const { userData, mediaFormData } = req.body;
+  const response = await addMedia(mediaDataBase, userData, mediaFormData);
+  if (response) {
+    res.status(200).json(true);
+  } else {
+    res.status(400).json(false);
+  }
+});
+
+app.post("/editMedia", async (req, res) => {
+  const response = await editMedia(mediaDataBase, req.body.currentMediaDetails);
+  if (response) {
+    res.status(200).json(true);
+  } else {
+    res.status(400).json(false);
+  }
+});
+
+app.post("/editMediaWatched", async (req, res) => {
+  const response = await editMediaWatched(
+    mediaDataBase,
+    req.body.currentMediaDetails
+  );
+  console.log(response);
+  if (response >= 0) {
+    res.status(200).json(response);
+  } else {
+    res.status(400).json(false);
+  }
+});
+
+app.post("/retrieveMedia", async (req, res) => {
+  const data = await retrieveMedia(mediaDataBase, req.body.userData);
+  if (data) {
+    res.status(200).json(data);
+  } else {
+    res.status(400);
   }
 });
 

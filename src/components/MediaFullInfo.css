@@ -1,0 +1,90 @@
+.media-full-info-container {
+  background-color: var(--container-background-color);
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.media-full-info-name {
+  color: var(--text-color);
+  font-size: 1.3rem;
+}
+
+.media-full-info-details-container {
+  display: flex;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px dashed var(--border-color);
+}
+
+.media-full-details-image img {
+  width: 26rem;
+  max-height: 40rem;
+  border: 1px solid var(--border-color);
+}
+
+.media-full-details-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  margin: 1rem;
+}
+
+.margin-right-medium {
+  margin-right: 1rem;
+}
+
+.edit-media-input-field-image {
+  width: 80%;
+  align-self: center;
+  font-size: 1.2rem;
+}
+
+.edit-media-input-field-name {
+  width: 30%;
+  align-self: center;
+  font-size: 1.2rem;
+}
+
+.edit-media-input-field-category {
+  width: 30%;
+  align-self: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.edit-media-input-field-genre {
+  width: 10%;
+  align-self: center;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.edit-media-input-field-year {
+  width: 10%;
+  align-self: center;
+  font-size: 1.2rem;
+}
+
+.edit-media-input-field-duration {
+  width: 10%;
+  align-self: center;
+  font-size: 1.2rem;
+}
+
+.edit-media-input-field-buttons {
+  display: flex;
+  width: 100%;
+  align-content: center;
+  justify-content: center;
+}
+
+.edit-media-input-field-button {
+  width: 20%;
+  margin-right: 1rem;
+}
+
+.edit-media-mesage {
+  text-align: center;
+}

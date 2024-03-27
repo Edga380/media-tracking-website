@@ -1,9 +1,43 @@
 import "./Home.css";
 import { LeftMenu } from "../components/LeftMenu";
 import { RightContent } from "../components/RightContent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [currentMediaDetails, setCurrentMediaDetails] = useState([]);
+
+  const [userData, setUserData] = useState({
+    username: "",
+    userId: -1,
+    joinedIn: -1,
+  });
+
+  useEffect(() => {
+    const retrieveUserData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/getuserdata", {
+          method: "POST",
+          headers: {
+            "Content-type": "application/json",
+          },
+          credentials: "include",
+        });
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            ...userData,
+            username: data.username,
+            userId: data.user_id,
+            joinedIn: data.joined_in,
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    retrieveUserData();
+  }, []);
+
   const [selectedMenuItem, setSelectedMenuItem] = useState("home");
 
   const handleMenuItemClick = (menuItem) => {
@@ -13,11 +47,8 @@ export default function Home() {
     <>
       <div className="home-container">
         <div className="left-side-container">
-          <div className="avatar-container">
-            <img src="./default_avatar.svg" alt="Avatar" />
-          </div>
           <div className="username-container">
-            <h2>Username</h2>
+            <h2>{userData.username}</h2>
           </div>
           <div className="user-menu-container">
             <LeftMenu
@@ -35,7 +66,13 @@ export default function Home() {
             />
             <button className="search-button">Search</button>
           </div>
-          <RightContent selectedMenuItem={selectedMenuItem}></RightContent>
+          <RightContent
+            currentMediaDetails={currentMediaDetails}
+            setCurrentMediaDetails={setCurrentMediaDetails}
+            selectedMenuItem={selectedMenuItem}
+            onMenuItemClick={handleMenuItemClick}
+            userData={userData}
+          ></RightContent>
         </div>
       </div>
     </>

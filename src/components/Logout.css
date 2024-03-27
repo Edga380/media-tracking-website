@@ -1,10 +1,10 @@
-.profile-container {
+.logout-container {
   background-color: var(--container-background-color);
   margin: 1rem;
   padding: 1rem;
 }
 
-.profile-section-container {
+.logout-section-container {
   display: flex;
   justify-content: center;
   margin-top: 1rem;
@@ -12,11 +12,7 @@
   border-top: 2px dashed var(--border-color);
 }
 
-.profile-information {
-  background-color: var(--background-color);
+.logout-information {
   display: flex;
   flex-direction: column;
-  text-align: center;
-  padding: 1rem 5rem 1rem 5rem;
-  border: 1px solid var(--border-color);
 }

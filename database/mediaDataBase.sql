@@ -1,10 +1,12 @@
 CREATE TABLE IF NOT EXISTS Media (
+  user_id INTEGER NOT NULL,
   media_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name CHAR(30) UNIQUE NOT NULL,
+  image_url CHAR(1000) NOT NULL,
+  name CHAR(30) NOT NULL,
   description TEXT NOT NULL,
   category TEXT not NULL,
   genre TEXT NOT NULL,
   year INTEGER NOT NULL,
   duration CHAR(30) NOT NULL,
-  rating DECIMAL(1,1)
+  watched BOOLEAN NOT NULL
 );

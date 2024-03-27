@@ -113,6 +113,92 @@ async function getUserId(db, username) {
   return userIddDb;
 }
 
+export async function retrieveUserData(db, signedCookie) {
+  const stmt = db.prepare("SELECT * FROM Sessions WHERE id = ?");
+  const userSessionData = stmt.get(signedCookie);
+  if (userSessionData) {
+    const stmt = db.prepare(
+      "SELECT user_id, username, joined_in FROM Users WHERE user_id = ?"
+    );
+    const usernameData = stmt.get(userSessionData.user_id);
+    return usernameData;
+  } else {
+    return false;
+  }
+}
+
+export async function addMedia(db, userId, mediaData) {
+  const stmt = db.prepare(
+    "INSERT INTO Media (user_id, image_url, name, description, category, genre, year, duration, watched) VALUES (?, ?, ?, ?, ?, ?, ?, ?, false)"
+  );
+  try {
+    stmt.run(
+      userId,
+      mediaData.imgUrl,
+      mediaData.name,
+      mediaData.description,
+      mediaData.category,
+      mediaData.genre,
+      mediaData.year,
+      mediaData.duration
+    );
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
+export async function editMedia(db, editedMediaData) {
+  const stmt = db.prepare(
+    "UPDATE Media SET image_url = ?, name = ?, description = ?, category = ?, genre = ?, year = ?, duration = ?, watched = ? WHERE user_id = ? AND media_id = ?"
+  );
+  const mediaData = stmt.run(
+    editedMediaData.image_url,
+    editedMediaData.name,
+    editedMediaData.description,
+    editedMediaData.category,
+    editedMediaData.genre,
+    editedMediaData.year,
+    editedMediaData.duration,
+    editedMediaData.watched,
+    editedMediaData.user_id,
+    editedMediaData.media_id
+  );
+  if (mediaData.changes > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+export async function editMediaWatched(db, editedMediaData) {
+  const stmt = db.prepare(
+    "UPDATE Media SET watched = ? WHERE user_id = ? AND media_id = ?"
+  );
+  const changeWachedState = editedMediaData.watched == 0 ? 1 : 0;
+  const mediaData = stmt.run(
+    changeWachedState,
+    editedMediaData.user_id,
+    editedMediaData.media_id
+  );
+  if (mediaData.changes > 0) {
+    return changeWachedState;
+  } else {
+    return false;
+  }
+}
+
+export async function retrieveMedia(db, userId) {
+  const stmt = db.prepare("SELECT * FROM Media WHERE user_id = ?");
+  const mediaData = stmt.all(userId);
+  if (mediaData) {
+    return mediaData;
+  } else {
+    return false;
+  }
+}
+
 function getCurrentYearMonthDay() {
   const currentDate = new Date();
   const year = currentDate.getFullYear();

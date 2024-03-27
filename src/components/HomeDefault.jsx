@@ -1,136 +1,87 @@
+import { useEffect, useState } from "react";
 import "./HomeDefault.css";
 
-export const HomeDefault = () => {
+export const HomeDefault = ({
+  userData,
+  onMenuItemClick,
+  currentMediaDetails,
+  setCurrentMediaDetails,
+}) => {
+  const [allMedia, setAllMedia] = useState([]);
+
+  useEffect(() => {
+    const retrieveMedia = async () => {
+      const response = await fetch("http://localhost:3000/retrieveMedia", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({ userData: userData.userId }),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setAllMedia(data);
+      }
+    };
+    if (userData.userId > 0) retrieveMedia();
+  }, [userData]);
+
+  const handleMediaNameClick = (index) => {
+    onMenuItemClick("mediaFullInfo");
+    setCurrentMediaDetails(allMedia[index]);
+  };
+
   return (
     <>
       <div className="to-watch-container">
         <div className="section-name">TO WATCH</div>
         <div className="section-cards-container">
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
+          {allMedia.length > 0 ? (
+            allMedia
+              .filter((media) => !media.watched)
+              .map((media, index) => (
+                <div key={index} className="media-card">
+                  <img className="media-card-img" src={media.image_url} />
+                  <div
+                    onClick={() =>
+                      handleMediaNameClick(allMedia.indexOf(media))
+                    }
+                    className="media-card-name"
+                  >
+                    {media.name}
+                  </div>
+                  <div className="media-card-year">{media.genre}</div>
+                  <div className="media-card-year">{media.year}</div>
+                </div>
+              ))
+          ) : (
+            <h2>No media</h2>
+          )}
         </div>
       </div>
       <div className="to-watch-container">
         <div className="section-name">WATCHED</div>
         <div className="section-cards-container">
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
-          <div className="media-card">
-            <img
-              className="media-card-img"
-              src="https://m.media-amazon.com/images/M/MV5BODI2NjdlYWItMTE1ZC00YzI2LTlhZGQtNzE3NzA4MWM0ODYzXkEyXkFqcGdeQXVyNjU1OTg4OTM@._V1_.jpg"
-              alt=""
-            />
-            <div className="media-card-name">Demon Slayer</div>
-            <div className="media-card-year">2018</div>
-            <div className="media-card-rating">9.7/10</div>
-          </div>
+          {allMedia.length > 0 &&
+          allMedia.filter((media) => media.watched).length > 0 ? (
+            allMedia
+              .filter((media) => media.watched)
+              .map((media, index) => (
+                <div key={index} className="media-card">
+                  <img className="media-card-img" src={media.image_url} />
+                  <div
+                    onClick={() =>
+                      handleMediaNameClick(allMedia.indexOf(media))
+                    }
+                    className="media-card-name"
+                  >
+                    {media.name}
+                  </div>
+                  <div className="media-card-year">{media.genre}</div>
+                  <div className="media-card-year">{media.year}</div>
+                </div>
+              ))
+          ) : (
+            <h2>No media</h2>
+          )}
         </div>
       </div>
     </>

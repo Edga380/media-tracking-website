@@ -1,4 +1,5 @@
 import { UseAuth } from "../components/UseAuth";
+import "./Logout.css";
 
 export const Logout = () => {
   const { logout } = UseAuth();
@@ -19,5 +20,15 @@ export const Logout = () => {
       console.log(error);
     }
   };
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <div className="logout-container">
+      <div className="section-name">LOGOUT</div>
+      <div className="logout-section-container">
+        <div className="logout-information">
+          <h2>See you later!</h2>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      </div>
+    </div>
+  );
 };
