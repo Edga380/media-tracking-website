@@ -14,7 +14,7 @@ export const MediaFullInfo = ({
 
   const [responseMsg, setResponseMsg] = useState({
     color: "rgb(240, 240, 240)",
-    message: "Edit mode active.",
+    message: editMedia === true ? "Edit mode active." : "",
   });
 
   const handleOnchangeMediaValues = (event) => {
@@ -53,9 +53,32 @@ export const MediaFullInfo = ({
     });
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setCurrentMediaDetails({ ...currentMediaDetails, watched: data });
     } else {
+    }
+  };
+
+  const handleRemoveMedia = async () => {
+    const response = await fetch("http://localhost:3000/removeMedia", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ currentMediaDetails }),
+    });
+    if (response.ok) {
+      setResponseMsg({
+        ...responseMsg,
+        color: "green",
+        message: "Media deleted successfully.",
+      });
+      setTimeout(() => {
+        onMenuItemClick("home");
+      }, 1000);
+    } else {
+      setResponseMsg({
+        ...responseMsg,
+        color: "red",
+        message: "Failed to delete media.",
+      });
     }
   };
 
@@ -69,6 +92,12 @@ export const MediaFullInfo = ({
         <div className="media-full-details-container">
           {!editMedia ? (
             <>
+              <h4
+                style={{ color: responseMsg.color }}
+                className="edit-media-mesage"
+              >
+                {responseMsg.message}
+              </h4>
               <p>{currentMediaDetails.description}</p>
               <p>Category: {currentMediaDetails.category}</p>
               <p>Duration: {currentMediaDetails.duration}min.</p>
@@ -197,7 +226,7 @@ export const MediaFullInfo = ({
                 </button>
                 <button
                   className="edit-media-input-field-button"
-                  onClick={() => onMenuItemClick("home")}
+                  onClick={handleActivateEdit}
                 >
                   Cancel
                 </button>
@@ -217,7 +246,9 @@ export const MediaFullInfo = ({
             >
               {currentMediaDetails.watched === 0 ? "Watched" : "Watch"}
             </button>
-            <button className="margin-right-medium">Remove</button>
+            <button onClick={handleRemoveMedia} className="margin-right-medium">
+              Remove
+            </button>
           </div>
         </div>
       </div>

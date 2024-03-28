@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 export default function Home() {
   const [currentMediaDetails, setCurrentMediaDetails] = useState([]);
+  const [selectedMenuItem, setSelectedMenuItem] = useState("home");
+  const [searchValue, setSearchValue] = useState("");
 
   const [userData, setUserData] = useState({
     username: "",
@@ -38,10 +40,12 @@ export default function Home() {
     retrieveUserData();
   }, []);
 
-  const [selectedMenuItem, setSelectedMenuItem] = useState("home");
-
   const handleMenuItemClick = (menuItem) => {
     setSelectedMenuItem(menuItem);
+  };
+
+  const handleOnChangeSearchValue = (event) => {
+    setSearchValue(event.target.value);
   };
   return (
     <>
@@ -63,8 +67,15 @@ export default function Home() {
               className="search-input"
               type="text"
               placeholder="Search..."
+              value={searchValue}
+              onChange={handleOnChangeSearchValue}
             />
-            <button className="search-button">Search</button>
+            <button
+              className="search-button"
+              onClick={() => handleMenuItemClick("searchMediaResults")}
+            >
+              Search
+            </button>
           </div>
           <RightContent
             currentMediaDetails={currentMediaDetails}
@@ -72,6 +83,7 @@ export default function Home() {
             selectedMenuItem={selectedMenuItem}
             onMenuItemClick={handleMenuItemClick}
             userData={userData}
+            searchValue={searchValue}
           ></RightContent>
         </div>
       </div>

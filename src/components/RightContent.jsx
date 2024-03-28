@@ -3,6 +3,8 @@ import { AddMedia } from "./AddMedia";
 import { UserProfile } from "./UserProfile";
 import { Logout } from "./Logout";
 import { MediaFullInfo } from "./MediaFullInfo";
+import { SearchMediaResults } from "./SearchMediaResults";
+import { useState } from "react";
 
 export const RightContent = ({
   selectedMenuItem,
@@ -10,7 +12,10 @@ export const RightContent = ({
   onMenuItemClick,
   setCurrentMediaDetails,
   currentMediaDetails,
+  searchValue,
 }) => {
+  const [passAllMedia, setPassAllMedia] = useState([]);
+
   return (
     <div className="right-content">
       {selectedMenuItem === "home" && (
@@ -19,7 +24,14 @@ export const RightContent = ({
           onMenuItemClick={onMenuItemClick}
           setCurrentMediaDetails={setCurrentMediaDetails}
           currentMediaDetails={currentMediaDetails}
+          setPassAllMedia={setPassAllMedia}
         ></HomeDefault>
+      )}
+      {selectedMenuItem === "searchMediaResults" && (
+        <SearchMediaResults
+          searchValue={searchValue}
+          passAllMedia={passAllMedia}
+        ></SearchMediaResults>
       )}
       {selectedMenuItem === "addMedia" && (
         <AddMedia userData={userData}></AddMedia>

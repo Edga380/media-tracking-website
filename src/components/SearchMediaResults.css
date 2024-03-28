@@ -1,0 +1,14 @@
+.search-media-container {
+  background-color: var(--container-background-color);
+  margin: 1rem;
+  padding: 1rem;
+}
+
+.search-media-section-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px dashed var(--border-color);
+}

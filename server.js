@@ -17,6 +17,7 @@ import {
   retrieveMedia,
   editMedia,
   editMediaWatched,
+  removeMedia,
 } from "./database/database.js";
 
 const usersDataBase = initializeDatabase(
@@ -131,11 +132,22 @@ app.post("/editMediaWatched", async (req, res) => {
     mediaDataBase,
     req.body.currentMediaDetails
   );
-  console.log(response);
   if (response >= 0) {
     res.status(200).json(response);
   } else {
     res.status(400).json(false);
+  }
+});
+
+app.post("/removeMedia", async (req, res) => {
+  const response = await removeMedia(
+    mediaDataBase,
+    req.body.currentMediaDetails
+  );
+  if (response) {
+    res.status(200).json(response);
+  } else {
+    res.status(400).json(response);
   }
 });
 

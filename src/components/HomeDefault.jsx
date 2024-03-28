@@ -4,8 +4,8 @@ import "./HomeDefault.css";
 export const HomeDefault = ({
   userData,
   onMenuItemClick,
-  currentMediaDetails,
   setCurrentMediaDetails,
+  setPassAllMedia,
 }) => {
   const [allMedia, setAllMedia] = useState([]);
 
@@ -19,6 +19,7 @@ export const HomeDefault = ({
       if (response.ok) {
         const data = await response.json();
         setAllMedia(data);
+        setPassAllMedia(data);
       }
     };
     if (userData.userId > 0) retrieveMedia();

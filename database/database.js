@@ -189,6 +189,18 @@ export async function editMediaWatched(db, editedMediaData) {
   }
 }
 
+export async function removeMedia(db, removeMedia) {
+  const stmt = db.prepare(
+    "DELETE FROM Media WHERE user_id = ? AND media_id = ?"
+  );
+  const mediaData = stmt.run(removeMedia.user_id, removeMedia.media_id);
+  if (mediaData.changes > 0) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export async function retrieveMedia(db, userId) {
   const stmt = db.prepare("SELECT * FROM Media WHERE user_id = ?");
   const mediaData = stmt.all(userId);
